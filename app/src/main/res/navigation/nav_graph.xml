@@ -15,9 +15,5 @@
     <fragment
         android:id="@+id/suggestionFragment"
         android:name="com.example.integradorandroid.view.SuggestionFragment"
-        android:label="SuggestionFragment" >
-        <action
-            android:id="@+id/action_suggestionFragment_to_initialFragment"
-            app:destination="@id/initialFragment" />
-    </fragment>
+        android:label="SuggestionFragment" />
 </navigation>

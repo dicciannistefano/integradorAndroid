@@ -5,6 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import com.example.integradorandroid.R
 import com.example.integradorandroid.databinding.InitialLayoutBinding
 
 class InitialFragment: Fragment() {
@@ -23,6 +27,11 @@ class InitialFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mBinding.
+            ButtonStart.setOnClickListener {
+            val action = InitialFragmentDirections.actionInitialFragmentToSuggestionFragment()
+                it.findNavController().navigate(action)
+            }
     }
 
     override fun onDestroy() {

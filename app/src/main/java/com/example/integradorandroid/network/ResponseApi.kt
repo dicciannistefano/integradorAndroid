@@ -7,8 +7,8 @@ import retrofit2.http.Url
 interface ResponseApi {
 
     @GET
-    fun getRandomActivity(@Url url: String): Response<BoredResponse>
+    suspend fun getRandomActivity(@Url url: String): Response<BoredResponse>
 
     @GET
-    fun getActivityByType(@Url url: String): Response<BoredResponse>
+    suspend fun getActivityByType(@Url url: String): Response<BoredResponse>
 }
