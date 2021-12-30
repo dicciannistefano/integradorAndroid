@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">Integrador Android</string>
 
-    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="terms_and_conditions"><u>Terms and conditions</u></string>
     <string name="app_title">Not Bored</string>
     <string name="participants">Participants</string>
     <string name="start">Start</string>
     <string name="price">Price</string>
     <string name="try_another">Try another</string>
+    <string name="random">Random</string>
     <string name="terms_and_conditions_text">Lorem ipsum dolor sit amet consectetur adipiscing elit inceptos ridiculus iaculis,
 nullam ligula elementum duis tellus maecenas nec fermentum sed dictum
 laoreet, taciti donec habitant quam purus ultricies porta posuere sociis. Cubilia

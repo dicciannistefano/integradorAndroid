@@ -13,7 +13,7 @@
         android:gravity="center"
         android:lines="2"
         android:padding="10dp"
-        android:text="Learn how to play a new sport"
+        android:text="..."
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="2"
+                android:text="-"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -94,21 +94,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Medium"
+                android:text="-"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ButtonTryAnother"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/tittle_color"
         android:backgroundTint="@color/tittle_color"
+        android:capitalize="none"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
         android:text="@string/try_another"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

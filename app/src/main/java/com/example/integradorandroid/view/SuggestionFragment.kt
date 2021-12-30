@@ -1,19 +1,20 @@
 package com.example.integradorandroid.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.integradorandroid.R
 import com.example.integradorandroid.databinding.SuggestionLayoutBinding
 import com.example.integradorandroid.network.BoredResponse
 import com.example.integradorandroid.network.ResponseApi
 import com.example.integradorandroid.utils.Categories
 import com.example.integradorandroid.utils.Constants
+import com.example.integradorandroid.utils.Prices
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -25,40 +26,58 @@ class SuggestionFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        setHasOptionsMenu(true)
         mBinding = SuggestionLayoutBinding.inflate(inflater, container, false)
-
         return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchRandomActivities()
+        config()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_random -> {
+                searchRandomActivities()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun config(){
+        searchActivitiesByType(Categories.music.name)
+
+        mBinding.ButtonTryAnother.setOnClickListener {
+            searchActivitiesByType(Categories.music.name)
+        }
     }
 
     private fun searchActivitiesByType(type: String){
         CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit()
-                .create(ResponseApi::class.java)
-                .getActivityByType(Categories.Music.name)
+            var boredResponse: BoredResponse?
+            var call: Response<BoredResponse>?
+            do{
+                call = getRetrofit(Constants.BASE_URL_TYPE)
+                    .create(ResponseApi::class.java)
+                    .getActivityByType(Constants.BASE_URL_TYPE2 + type)
 
-            val boredResponse: BoredResponse? = call.body()
+                boredResponse= call.body()
+            } while (boredResponse?.participants != 4)
 
             activity?.runOnUiThread {
-                if(call.isSuccessful){
-                    mBinding.apply {
-                        TextViewActivityTitle.text = boredResponse?.activity
+                call?.let {
+                    if(call.isSuccessful){
+                        loadActivityData(boredResponse)
+                    }else{
+                        Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
                     }
-                }else{
-                    Toast.makeText(context, "Error", Toast.LENGTH_LONG)
                 }
             }
         }
@@ -66,26 +85,46 @@ class SuggestionFragment: Fragment() {
 
     private fun searchRandomActivities(){
         CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit()
-                .create(ResponseApi::class.java)
-                .getRandomActivity("")
+            var boredResponse: BoredResponse?
+            var call: Response<BoredResponse>?
+            do{
+                call = getRetrofit(Constants.BASE_URL_RANDOM)
+                    .create(ResponseApi::class.java)
+                    .getActivityByType("")
 
-            val boredResponse: BoredResponse? = call.body()
+                boredResponse= call.body()
+            } while (boredResponse?.participants != 4)
 
             activity?.runOnUiThread {
-                if(call.isSuccessful){
-                    mBinding.apply {
-                        TextViewActivityTitle.text = boredResponse?.activity
+                call?.let {
+                    if(call.isSuccessful){
+                        loadActivityData(boredResponse)
+                    }else{
+                        Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
                     }
-                }else{
-                    Toast.makeText(context, "Error", Toast.LENGTH_LONG)
                 }
             }
         }
     }
 
-    private fun getRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl(Constants.BASE_URL)
+    private fun loadActivityData(boredResponse: BoredResponse){
+        mBinding.apply {
+            boredResponse?.let {
+                when (it.price) {
+                    0.0 -> TextViewPrice.text = Prices.Free.name
+                    in 0.0..0.3 -> TextViewPrice.text = Prices.Low.name
+                    in 0.3..0.6 -> TextViewPrice.text = Prices.Medium .name
+                    in 0.6..1.0 -> TextViewPrice.text = Prices.High .name
+                }
+
+                TextViewActivityTitle.text = boredResponse.activity
+                TextViewParticipants.text = boredResponse.participants.toString()
+            }
+        }
+    }
+
+    private fun getRetrofit(baseUrl: String): Retrofit {
+        return Retrofit.Builder().baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

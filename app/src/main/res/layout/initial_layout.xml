@@ -45,6 +45,10 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingStart="5dp"
+            android:background="@drawable/search_background"
             android:numeric="integer" />
     </LinearLayout>
 
@@ -60,13 +64,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ButtonStart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/tittle_color"
             android:backgroundTint="@color/tittle_color"
-            android:text="@string/start" />
+            android:text="@string/start"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/TextViewTermsAndConditions"
