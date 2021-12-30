@@ -21,6 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SuggestionFragment: Fragment() {
 
     private lateinit var mBinding: SuggestionLayoutBinding
+    private var participants = 4
+    private var category = Categories.music.name
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,56 +39,48 @@ class SuggestionFragment: Fragment() {
     }
 
     private fun config(){
-        searchActivitiesByType(Categories.music.name)
+        searchActivitiesByType(category,participants)
 
         mBinding.ButtonTryAnother.setOnClickListener {
-            searchActivitiesByType(Categories.music.name)
+            searchActivitiesByType(category, participants)
         }
     }
 
-    private fun searchActivitiesByType(type: String){
+    private fun searchActivitiesByType(type: String, participants: Int){
         CoroutineScope(Dispatchers.IO).launch {
-            var boredResponse: BoredResponse?
-            var call: Response<BoredResponse>?
-            do{
-                call = getRetrofit(Constants.BASE_URL_TYPE)
-                    .create(ResponseApi::class.java)
-                    .getActivityByType(Constants.BASE_URL_TYPE2 + type)
+            val call = getRetrofit(Constants.BASE_URL)
+                .create(ResponseApi::class.java)
+                .getActivityByType(Constants.END_POINT_TYPE + type + "&participants=$participants")
 
-                boredResponse= call.body()
-            } while (boredResponse?.participants != 4)
+            val boredResponse = call.body()
 
             activity?.runOnUiThread {
-                call?.let {
-                    if(call.isSuccessful){
-                        loadActivityData(boredResponse)
-                    }else{
-                        Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                if(call.isSuccessful){
+                    boredResponse?.let {
+                        loadActivityData(it)
                     }
+                }else{
+                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
-    private fun searchRandomActivities(){
+    private fun searchRandomActivities(participants: Int){
         CoroutineScope(Dispatchers.IO).launch {
-            var boredResponse: BoredResponse?
-            var call: Response<BoredResponse>?
-            do{
-                call = getRetrofit(Constants.BASE_URL_RANDOM)
-                    .create(ResponseApi::class.java)
-                    .getActivityByType("")
+            val call = getRetrofit(Constants.BASE_URL)
+                .create(ResponseApi::class.java)
+                .getActivityByType(Constants.END_POINT_RANDOM + participants)
 
-                boredResponse= call.body()
-            } while (boredResponse?.participants != 4)
+            val boredResponse= call.body()
 
             activity?.runOnUiThread {
-                call?.let {
-                    if(call.isSuccessful){
-                        loadActivityData(boredResponse)
-                    }else{
-                        Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                if(call.isSuccessful){
+                    boredResponse?.let {
+                        loadActivityData(it)
                     }
+                }else{
+                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
                 }
             }
         }
