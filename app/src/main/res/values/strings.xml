@@ -39,5 +39,7 @@ class facilisi curabitur quisque, fusce vulputate semper a nulla velit, duis in 
 faucibus turpis. Risus metus magnis aliquam accumsan laoreet congue per,
 tempus purus et odio senectus sodales vulputate, ligula malesuada dis habitasse
 nullam pellentesque.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

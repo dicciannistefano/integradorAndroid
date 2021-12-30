@@ -11,9 +11,16 @@
         <action
             android:id="@+id/action_initialFragment_to_suggestionFragment"
             app:destination="@id/suggestionFragment" />
+        <action
+            android:id="@+id/action_initialFragment_to_termsAndConditionFragments"
+            app:destination="@id/termsAndConditionFragment" />
     </fragment>
     <fragment
         android:id="@+id/suggestionFragment"
         android:name="com.example.integradorandroid.view.SuggestionFragment"
         android:label="SuggestionFragment" />
+    <fragment
+        android:id="@+id/termsAndConditionFragment"
+        android:name="com.example.integradorandroid.view.termsAndConditionsFragments"
+        android:label="TermsAndConditionFragment" />
 </navigation>

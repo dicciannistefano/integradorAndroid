@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
@@ -25,14 +27,20 @@ class InitialFragment: Fragment() {
         return mBinding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mBinding.
-            ButtonStart.setOnClickListener {
-            val action = InitialFragmentDirections.actionInitialFragmentToSuggestionFragment()
+        mBinding.ButtonStart.setOnClickListener {
+                val action = InitialFragmentDirections.actionInitialFragmentToSuggestionFragment()
                 it.findNavController().navigate(action)
             }
-    }
+        mBinding.TextViewTermsAndConditions.setOnClickListener{
+                val action = InitialFragmentDirections.actionInitialFragmentToTermsAndConditionFragments()
+                it.findNavController().navigate(action)
+            }
+        }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
