@@ -31,7 +31,7 @@ class InitialFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding.ButtonStart.setOnClickListener {
-                val action = InitialFragmentDirections.actionInitialFragmentToSuggestionFragment()
+                val action = InitialFragmentDirections.actionInitialFragmentToActivityListFragment()
                 it.findNavController().navigate(action)
             }
         mBinding.TextViewTermsAndConditions.setOnClickListener{

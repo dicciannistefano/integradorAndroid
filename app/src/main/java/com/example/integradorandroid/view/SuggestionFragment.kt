@@ -27,7 +27,6 @@ class SuggestionFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
         mBinding = SuggestionLayoutBinding.inflate(inflater, container, false)
         return mBinding.root
     }
@@ -35,20 +34,6 @@ class SuggestionFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         config()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.action_random -> {
-                searchRandomActivities()
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun config(){
