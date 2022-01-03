@@ -27,12 +27,12 @@
             android:name="participantsCount"
             app:argType="string"
             app:nullable="true"
-            android:defaultValue='""' />
+            android:defaultValue='' />
         <argument
             android:name="selectedActivity"
             app:argType="string"
             app:nullable="true"
-            android:defaultValue='""' />
+            android:defaultValue='' />
     </fragment>
     <fragment
         android:id="@+id/termsAndConditionFragment"
@@ -56,6 +56,6 @@
             android:name="participantsCount"
             app:argType="string"
             app:nullable="true"
-            android:defaultValue='""' />
+            android:defaultValue='' />
     </fragment>
 </navigation>

@@ -48,7 +48,10 @@ class SuggestionFragment: Fragment() {
         participants = args.participantsCount.toString()
         category = args.selectedActivity.toString()
 
-        searchActivitiesByType(category,participants)
+        when(category){
+            "" -> searchRandomActivities(category)
+            else -> searchActivitiesByType(category,participants)
+        }
 
         mBinding.ButtonTryAnother.setOnClickListener {
             searchActivitiesByType(category, participants)
@@ -60,17 +63,21 @@ class SuggestionFragment: Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val call = getRetrofit(Constants.BASE_URL)
                 .create(ResponseApi::class.java)
-                .getActivityByType(Constants.END_POINT_TYPE + type + "&participants=$participants")
+                .getActivityByType(Constants.END_POINT_TYPE + type + Constants.END_POINT_PARTICIPANTS + participants)
 
             val boredResponse = call.body()
 
             activity?.runOnUiThread {
                 if(call.isSuccessful){
-                    boredResponse?.let {
-                        loadActivityData(it)
+                    if(!boredResponse?.activity.isNullOrEmpty()){
+                        boredResponse?.let {
+                            loadActivityData(it)
+                        }
+                    }else{
+                        showError()
                     }
                 }else{
-                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                    showError()
                 }
             }
         }
@@ -86,19 +93,32 @@ class SuggestionFragment: Fragment() {
 
             activity?.runOnUiThread {
                 if(call.isSuccessful){
-                    boredResponse?.let {
-                        loadActivityData(it)
+                    if(!boredResponse?.activity.isNullOrEmpty()){
+                        boredResponse?.let {
+                            loadActivityData(it)
+                        }
+                    }else{
+                        showError()
                     }
                 }else{
-                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                    showError()
                 }
             }
+        }
+    }
+
+    private fun showError(){
+        mBinding.apply {
+            ErrorConstraintLayout.visibility = View.VISIBLE
+            SuccessConstraintLayout.visibility = View.GONE
         }
     }
 
     private fun loadActivityData(boredResponse: BoredResponse){
         mBinding.apply {
             boredResponse?.let {
+                ErrorConstraintLayout.visibility = View.GONE
+                SuccessConstraintLayout.visibility = View.VISIBLE
                 when (it.price) {
                     0.0 -> TextViewPrice.text = Prices.Free.name
                     in 0.0..0.3 -> TextViewPrice.text = Prices.Low.name
@@ -108,6 +128,13 @@ class SuggestionFragment: Fragment() {
 
                 TextViewActivityTitle.text = boredResponse.activity
                 TextViewParticipants.text = boredResponse.participants.toString()
+            }
+
+            ButtonTryAnother.setOnClickListener {
+                when(category){
+                    "" -> searchRandomActivities(category)
+                    else -> searchActivitiesByType(category,participants)
+                }
             }
         }
     }

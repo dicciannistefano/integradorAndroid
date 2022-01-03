@@ -3,6 +3,8 @@ package com.example.integradorandroid.view
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.integradorandroid.R
 import com.example.integradorandroid.databinding.ActivitiesLayoutBinding
@@ -55,7 +57,9 @@ class ActivityListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_random -> {
-
+                val action = ActivityListFragmentDirections.actionActivityListFragmentToSuggestionFragment()
+                action.participantsCount = participantsQuantity
+                this.findNavController().navigate(action)
             }
         }
         return super.onOptionsItemSelected(item)

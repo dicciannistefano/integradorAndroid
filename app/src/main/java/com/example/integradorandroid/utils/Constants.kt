@@ -4,4 +4,5 @@ object Constants {
     const val BASE_URL = "https://www.boredapi.com/api/"
     const val END_POINT_TYPE = "activity?type="
     const val END_POINT_RANDOM = "activity?participants="
+    const val END_POINT_PARTICIPANTS = "&participants="
 }

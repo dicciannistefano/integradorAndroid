@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.example.integradorandroid.R
 import com.example.integradorandroid.databinding.InitialLayoutBinding
 import com.example.integradorandroid.utils.disableButton
+import com.example.integradorandroid.utils.enableButton
 
 class InitialFragment: Fragment() {
 
@@ -28,10 +32,12 @@ class InitialFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinding?.apply {
             ButtonStart.setOnClickListener {
-                if(valueControl()){
+                if(checkBox.isChecked){
                     val action = InitialFragmentDirections.actionInitialFragmentToActivityListFragment()
                     action.participantsCount = EditTextParticipants.text.toString()
                     it.findNavController().navigate(action)
+                }else{
+                    Toast.makeText(context, getString(R.string.accept_term_and_conditions), Toast.LENGTH_LONG).show()
                 }
             }
             TextViewTermsAndConditions.setOnClickListener{
@@ -39,22 +45,16 @@ class InitialFragment: Fragment() {
                 it.findNavController().navigate(action)
             }
 
-        }
-
-    }
-
-    private fun valueControl(): Boolean{
-        when{
-            mBinding.EditTextParticipants.text.toString().isNullOrEmpty() -> mBinding.ButtonStart.isEnabled = true
-            mBinding.EditTextParticipants.text.toString().isBlank() -> mBinding.ButtonStart.isEnabled = true
-            mBinding.EditTextParticipants.text.toString().toInt() < 1 -> mBinding.ButtonStart.isEnabled = true
-            else -> {
-                mBinding.ButtonStart.isEnabled = false
-                return true
+            EditTextParticipants.doAfterTextChanged {
+                when{
+                    it.toString().isNullOrEmpty() -> mBinding.ButtonStart.disableButton()
+                    it.toString().isBlank() -> mBinding.ButtonStart.disableButton()
+                    it.toString().toInt() < 1 -> mBinding.ButtonStart.disableButton()
+                    else -> mBinding.ButtonStart.enableButton()
+                }
             }
-        }
-        mBinding.ButtonStart.disableButton()
-        return false
-    }
 
+        }
+
+    }
 }

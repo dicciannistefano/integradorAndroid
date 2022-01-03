@@ -7,6 +7,8 @@
     <string name="start">Start</string>
     <string name="price">Price</string>
     <string name="try_another">Try another</string>
+    <string name="error_text">No activity found with the specified parameters</string>
+    <string name="accept_term_and_conditions">You must accepts Terms and Conditions in order to continue</string>
     <string name="random">Random</string>
     <string name="terms_and_conditions_text">Lorem ipsum dolor sit amet consectetur adipiscing elit inceptos ridiculus iaculis,
 nullam ligula elementum duis tellus maecenas nec fermentum sed dictum
