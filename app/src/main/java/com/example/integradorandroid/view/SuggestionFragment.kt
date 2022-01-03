@@ -2,6 +2,7 @@ package com.example.integradorandroid.view
 
 import android.os.Bundle
 import android.view.*
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.integradorandroid.R
@@ -24,6 +25,7 @@ class SuggestionFragment: Fragment() {
     private var participants = 4
     private var category = Categories.music.name
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +38,7 @@ class SuggestionFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         config()
+
     }
 
     private fun config(){
@@ -47,10 +50,14 @@ class SuggestionFragment: Fragment() {
     }
 
     private fun searchActivitiesByType(type: String, participants: Int){
+
+        val ediTextParticipants = activity?.findViewById<EditText>(R.id.EditTextParticipants)
+        val resultParticipants = ediTextParticipants?.text.toString()
+
         CoroutineScope(Dispatchers.IO).launch {
             val call = getRetrofit(Constants.BASE_URL)
                 .create(ResponseApi::class.java)
-                .getActivityByType(Constants.END_POINT_TYPE + type + "&participants=$participants")
+                .getActivityByType(Constants.END_POINT_TYPE + type + "&participants=$resultParticipants")
 
             val boredResponse = call.body()
 

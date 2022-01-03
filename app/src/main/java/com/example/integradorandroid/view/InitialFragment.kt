@@ -12,6 +12,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import com.example.integradorandroid.R
 import com.example.integradorandroid.databinding.InitialLayoutBinding
+import com.example.integradorandroid.utils.Categories
 
 class InitialFragment: Fragment() {
 
@@ -30,14 +31,21 @@ class InitialFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mBinding.ButtonStart.setOnClickListener {
+        mBinding?.apply {
+            ButtonStart.setOnClickListener {
+
                 val action = InitialFragmentDirections.actionInitialFragmentToActivityListFragment()
+                action.participantsCount = EditTextParticipants.text.toString()
+
                 it.findNavController().navigate(action)
             }
-        mBinding.TextViewTermsAndConditions.setOnClickListener{
+            TextViewTermsAndConditions.setOnClickListener{
                 val action = InitialFragmentDirections.actionInitialFragmentToTermsAndConditionFragments()
                 it.findNavController().navigate(action)
             }
+
+        }
+
         }
 
 

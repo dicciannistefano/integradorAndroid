@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.integradorandroid.R
 
 
-class termsAndConditionsFragments : Fragment() {
+class TermsAndConditionsFragments : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

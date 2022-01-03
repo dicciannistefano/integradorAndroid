@@ -14,6 +14,8 @@
         <action
             android:id="@+id/action_initialFragment_to_activityListFragment"
             app:destination="@id/activityListFragment" />
+
+
     </fragment>
     <fragment
         android:id="@+id/suggestionFragment"
@@ -22,10 +24,20 @@
         <action
             android:id="@+id/action_suggestionFragment_to_activityListFragment"
             app:destination="@id/activityListFragment" />
+        <argument
+            android:name="participantsCount"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue='""' />
+        <argument
+            android:name="selectedActivity"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/termsAndConditionFragment"
-        android:name="com.example.integradorandroid.view.termsAndConditionsFragments"
+        android:name="com.example.integradorandroid.view.TermsAndConditionsFragments"
         android:label="TermsAndConditionFragment" >
         <action
             android:id="@+id/action_termsAndConditionFragment_to_initialFragment"
@@ -41,5 +53,10 @@
         <action
             android:id="@+id/action_activityListFragment_to_initialFragment"
             app:destination="@id/initialFragment" />
+        <argument
+            android:name="participantsCount"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue='""' />
     </fragment>
 </navigation>

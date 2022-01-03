@@ -3,16 +3,55 @@ package com.example.integradorandroid.view
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.example.integradorandroid.R
+import com.example.integradorandroid.databinding.ActivitiesLayoutBinding
+import com.example.integradorandroid.databinding.InitialLayoutBinding
+
+import com.example.integradorandroid.recyclerview.ActivityAdapter
+import com.example.integradorandroid.utils.Categories
 
 class ActivityListFragment : Fragment() {
+
+
+    private lateinit var mBinding: ActivitiesLayoutBinding
+
+    private lateinit var adapter : ActivityAdapter
+
+    private var categoryList = Categories.values()
+    private var participantsCount = ""
+    private val activityListFragmentsArgs : ActivityListFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.activities_layout, container, false)
+        mBinding = ActivitiesLayoutBinding.inflate(inflater, container, false)
+
+        return mBinding.root
+
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        participantsCount = activityListFragmentsArgs.participantsCount.toString()
+
+        // Init RecyclerView
+        initRecyclerView()
+
+        adapter.addItem(categoryList)
+        adapter.notifyDataSetChanged()
+
+    }
+
+    private fun initRecyclerView(){
+
+        adapter = ActivityAdapter()
+        mBinding.RecyclerViewActivities.adapter = adapter
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
