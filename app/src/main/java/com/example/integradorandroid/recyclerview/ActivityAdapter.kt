@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.integradorandroid.R
 import com.example.integradorandroid.utils.Categories
 
-class ActivityAdapter() : RecyclerView.Adapter<ActivityViewHolder>(){
+class ActivityAdapter(participantsQuantity: String) : RecyclerView.Adapter<ActivityViewHolder>(){
 
-    private var ActivityList : ArrayList<Categories> = arrayListOf()
+    private var activityList : ArrayList<Categories> = arrayListOf()
+    private var participantsQuantityValue = participantsQuantity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {
 
@@ -18,13 +19,14 @@ class ActivityAdapter() : RecyclerView.Adapter<ActivityViewHolder>(){
 
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
 
-        val activityAtPosition = ActivityList[position]
+        val activityAtPosition = activityList[position]
         holder.bind(activityAtPosition)
+        holder.setParticipantsQuantity(participantsQuantityValue)
     }
 
-    override fun getItemCount() = ActivityList.size
+    override fun getItemCount() = activityList.size
 
-    fun addItem(activityList : Array<Categories>){
-        ActivityList.addAll(activityList)
+    fun addItem(newActivityList : Array<Categories>){
+        activityList.addAll(newActivityList)
     }
 }

@@ -13,13 +13,10 @@ import com.example.integradorandroid.utils.Categories
 
 class ActivityListFragment : Fragment() {
 
-
     private lateinit var mBinding: ActivitiesLayoutBinding
-
     private lateinit var adapter : ActivityAdapter
-
     private var categoryList = Categories.values()
-    private var participantsCount = ""
+    private var participantsQuantity = ""
     private val activityListFragmentsArgs : ActivityListFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -30,28 +27,24 @@ class ActivityListFragment : Fragment() {
         mBinding = ActivitiesLayoutBinding.inflate(inflater, container, false)
 
         return mBinding.root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        participantsCount = activityListFragmentsArgs.participantsCount.toString()
+        participantsQuantity = activityListFragmentsArgs.participantsCount.toString()
 
         // Init RecyclerView
         initRecyclerView()
 
         adapter.addItem(categoryList)
         adapter.notifyDataSetChanged()
-
     }
 
     private fun initRecyclerView(){
 
-        adapter = ActivityAdapter()
+        adapter = ActivityAdapter(participantsQuantity)
         mBinding.RecyclerViewActivities.adapter = adapter
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

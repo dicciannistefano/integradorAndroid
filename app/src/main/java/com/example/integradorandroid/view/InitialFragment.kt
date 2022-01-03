@@ -5,14 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
-import com.example.integradorandroid.R
 import com.example.integradorandroid.databinding.InitialLayoutBinding
-import com.example.integradorandroid.utils.Categories
+import com.example.integradorandroid.utils.disableButton
 
 class InitialFragment: Fragment() {
 
@@ -33,11 +28,11 @@ class InitialFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinding?.apply {
             ButtonStart.setOnClickListener {
-
-                val action = InitialFragmentDirections.actionInitialFragmentToActivityListFragment()
-                action.participantsCount = EditTextParticipants.text.toString()
-
-                it.findNavController().navigate(action)
+                if(valueControl()){
+                    val action = InitialFragmentDirections.actionInitialFragmentToActivityListFragment()
+                    action.participantsCount = EditTextParticipants.text.toString()
+                    it.findNavController().navigate(action)
+                }
             }
             TextViewTermsAndConditions.setOnClickListener{
                 val action = InitialFragmentDirections.actionInitialFragmentToTermsAndConditionFragments()
@@ -46,15 +41,20 @@ class InitialFragment: Fragment() {
 
         }
 
+    }
+
+    private fun valueControl(): Boolean{
+        when{
+            mBinding.EditTextParticipants.text.toString().isNullOrEmpty() -> mBinding.ButtonStart.isEnabled = true
+            mBinding.EditTextParticipants.text.toString().isBlank() -> mBinding.ButtonStart.isEnabled = true
+            mBinding.EditTextParticipants.text.toString().toInt() < 1 -> mBinding.ButtonStart.isEnabled = true
+            else -> {
+                mBinding.ButtonStart.isEnabled = false
+                return true
+            }
         }
-
-
-
-    override fun onDestroy() {
-        super.onDestroy()
+        mBinding.ButtonStart.disableButton()
+        return false
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
 }

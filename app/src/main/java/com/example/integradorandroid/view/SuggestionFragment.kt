@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.example.integradorandroid.R
 import com.example.integradorandroid.databinding.SuggestionLayoutBinding
 import com.example.integradorandroid.network.BoredResponse
@@ -22,8 +23,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SuggestionFragment: Fragment() {
 
     private lateinit var mBinding: SuggestionLayoutBinding
-    private var participants = 4
-    private var category = Categories.music.name
+    private var participants = ""
+    private var category = ""
+
+    private val args : SuggestionFragmentArgs by navArgs()
 
 
     override fun onCreateView(
@@ -42,6 +45,9 @@ class SuggestionFragment: Fragment() {
     }
 
     private fun config(){
+        participants = args.participantsCount.toString()
+        category = args.selectedActivity.toString()
+
         searchActivitiesByType(category,participants)
 
         mBinding.ButtonTryAnother.setOnClickListener {
@@ -49,15 +55,12 @@ class SuggestionFragment: Fragment() {
         }
     }
 
-    private fun searchActivitiesByType(type: String, participants: Int){
-
-        val ediTextParticipants = activity?.findViewById<EditText>(R.id.EditTextParticipants)
-        val resultParticipants = ediTextParticipants?.text.toString()
+    private fun searchActivitiesByType(type: String, participants: String){
 
         CoroutineScope(Dispatchers.IO).launch {
             val call = getRetrofit(Constants.BASE_URL)
                 .create(ResponseApi::class.java)
-                .getActivityByType(Constants.END_POINT_TYPE + type + "&participants=$resultParticipants")
+                .getActivityByType(Constants.END_POINT_TYPE + type + "&participants=$participants")
 
             val boredResponse = call.body()
 
@@ -73,7 +76,7 @@ class SuggestionFragment: Fragment() {
         }
     }
 
-    private fun searchRandomActivities(participants: Int){
+    private fun searchRandomActivities(participants: String){
         CoroutineScope(Dispatchers.IO).launch {
             val call = getRetrofit(Constants.BASE_URL)
                 .create(ResponseApi::class.java)

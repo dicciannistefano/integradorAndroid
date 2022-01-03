@@ -11,14 +11,21 @@ import com.example.integradorandroid.view.InitialFragmentDirections
 class ActivityViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
     private val binding = ActivityItemBinding.bind(view)
+    private var participantQuantity = ""
+
+    fun setParticipantsQuantity(participantsQuantityValue: String){
+        participantQuantity = participantsQuantityValue
+    }
 
     fun bind(activityAtPosition : Categories){
-        binding.activityTextView.text = activityAtPosition.name
-        binding.LinearLayoutItem.setOnClickListener{
-            val action = ActivityListFragmentDirections.actionActivityListFragmentToSuggestionFragment()
-            //action.participantsCount = EditTextParticipants.text.toString()
-
-            it.findNavController().navigate(action)
+        binding.apply {
+            activityTextView.text = activityAtPosition.name
+            LinearLayoutItem.setOnClickListener{
+                val action = ActivityListFragmentDirections.actionActivityListFragmentToSuggestionFragment()
+                action.participantsCount = participantQuantity
+                action.selectedActivity = activityAtPosition.name
+                it.findNavController().navigate(action)
+            }
         }
     }
 

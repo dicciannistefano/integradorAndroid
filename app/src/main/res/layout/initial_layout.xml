@@ -68,8 +68,7 @@
             android:id="@+id/ButtonStart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/tittle_color"
-            android:backgroundTint="@color/tittle_color"
+            android:background="@drawable/shape_enable"
             android:text="@string/start"
             android:textAllCaps="false"
             android:textColor="@color/white" />

@@ -6,8 +6,7 @@
     app:startDestination="@id/initialFragment">
     <fragment
         android:id="@+id/initialFragment"
-        android:name="com.example.integradorandroid.view.InitialFragment"
-        android:label="InitialFragment" >
+        android:name="com.example.integradorandroid.view.InitialFragment">
         <action
             android:id="@+id/action_initialFragment_to_termsAndConditionFragments"
             app:destination="@id/termsAndConditionFragment" />
@@ -38,7 +37,7 @@
     <fragment
         android:id="@+id/termsAndConditionFragment"
         android:name="com.example.integradorandroid.view.TermsAndConditionsFragments"
-        android:label="TermsAndConditionFragment" >
+        android:label="Terms AndCondition" >
         <action
             android:id="@+id/action_termsAndConditionFragment_to_initialFragment"
             app:destination="@id/initialFragment" />
@@ -46,7 +45,7 @@
     <fragment
         android:id="@+id/activityListFragment"
         android:name="com.example.integradorandroid.view.ActivityListFragment"
-        android:label="ActivityListFragment" >
+        android:label="Activities" >
         <action
             android:id="@+id/action_activityListFragment_to_suggestionFragment"
             app:destination="@id/suggestionFragment" />

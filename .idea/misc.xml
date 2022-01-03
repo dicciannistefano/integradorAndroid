@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/search_background.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/drawable/shape_disable.xml" value="0.2598958333333333" />
+        <entry key="app/src/main/res/drawable/shape_enable.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/layout/activities_layout.xml" value="0.2033514492753623" />
         <entry key="app/src/main/res/layout/activity_item.xml" value="0.2033514492753623" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1381340579710145" />
