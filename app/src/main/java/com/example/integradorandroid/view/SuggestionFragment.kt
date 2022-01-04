@@ -87,7 +87,7 @@ class SuggestionFragment: Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val call = getRetrofit(Constants.BASE_URL)
                 .create(ResponseApi::class.java)
-                .getActivityByType(Constants.END_POINT_RANDOM + participants)
+                .getActivityByType(Constants.END_POINT_RANDOM + participants) //Suggestions: call function getActivityByRandom
 
             val boredResponse= call.body()
 
@@ -132,7 +132,7 @@ class SuggestionFragment: Fragment() {
 
             ButtonTryAnother.setOnClickListener {
                 when(category){
-                    "" -> searchRandomActivities(category)
+                    "" -> searchRandomActivities(category) //Suggestions: enter participants
                     else -> searchActivitiesByType(category,participants)
                 }
             }
